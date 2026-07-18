@@ -1,0 +1,156 @@
+<svg width="1200" height="1200" viewBox="0 0 1200 1200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="bg" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(600 600) rotate(90) scale(720)">
+      <stop offset="0" stop-color="#101524"/>
+      <stop offset="0.62" stop-color="#090D16"/>
+      <stop offset="1" stop-color="#05070E"/>
+    </radialGradient>
+    <radialGradient id="bgBlue" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(845 360) rotate(130) scale(450 330)">
+      <stop offset="0" stop-color="#3B82F6" stop-opacity="0.7"/>
+      <stop offset="1" stop-color="#3B82F6" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="bgPurple" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(340 820) rotate(26) scale(500 370)">
+      <stop offset="0" stop-color="#8B5CF6" stop-opacity="0.72"/>
+      <stop offset="1" stop-color="#8B5CF6" stop-opacity="0"/>
+    </radialGradient>
+
+    <linearGradient id="shirtBase" x1="600" y1="195" x2="600" y2="1030" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#272E3D"/>
+      <stop offset="0.46" stop-color="#171D2A"/>
+      <stop offset="1" stop-color="#0A0F17"/>
+    </linearGradient>
+    <radialGradient id="shirtSpec" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(520 425) rotate(30) scale(270 180)">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.24"/>
+      <stop offset="1" stop-color="#FFFFFF" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="rimBlue" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(770 600) rotate(90) scale(360 220)">
+      <stop offset="0" stop-color="#60A5FA" stop-opacity="0.24"/>
+      <stop offset="1" stop-color="#60A5FA" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="rimPurple" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(430 670) rotate(90) scale(350 220)">
+      <stop offset="0" stop-color="#A78BFA" stop-opacity="0.26"/>
+      <stop offset="1" stop-color="#A78BFA" stop-opacity="0"/>
+    </radialGradient>
+
+    <radialGradient id="nebulaCore" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(602 620) rotate(90) scale(205)">
+      <stop offset="0" stop-color="#F8FAFC" stop-opacity="0.86"/>
+      <stop offset="0.35" stop-color="#DDD6FE" stop-opacity="0.74"/>
+      <stop offset="0.7" stop-color="#93C5FD" stop-opacity="0.45"/>
+      <stop offset="1" stop-color="#93C5FD" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="nebulaOuter" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(610 730) rotate(90) scale(170)">
+      <stop offset="0" stop-color="#E2E8F0" stop-opacity="0.58"/>
+      <stop offset="0.5" stop-color="#A78BFA" stop-opacity="0.44"/>
+      <stop offset="1" stop-color="#3B82F6" stop-opacity="0"/>
+    </radialGradient>
+
+    <linearGradient id="inkMain" x1="455" y1="430" x2="760" y2="820" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.97"/>
+      <stop offset="0.42" stop-color="#E9D5FF" stop-opacity="0.94"/>
+      <stop offset="1" stop-color="#93C5FD" stop-opacity="0.9"/>
+    </linearGradient>
+    <linearGradient id="inkShade" x1="520" y1="520" x2="660" y2="830" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#F8FAFC" stop-opacity="0.26"/>
+      <stop offset="1" stop-color="#CBD5E1" stop-opacity="0.08"/>
+    </linearGradient>
+
+    <filter id="bgBlur" x="0" y="0" width="1200" height="1200" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="30"/>
+    </filter>
+    <filter id="shirtShadow" x="110" y="80" width="980" height="1100" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feOffset dy="20"/>
+      <feGaussianBlur stdDeviation="20"/>
+      <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.58 0"/>
+      <feBlend in2="SourceGraphic" mode="normal"/>
+    </filter>
+    <filter id="printGlow" x="400" y="390" width="400" height="500" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="2.4"/>
+    </filter>
+
+    <pattern id="fabricGrain" width="7" height="7" patternUnits="userSpaceOnUse">
+      <circle cx="1.2" cy="1.2" r="0.44" fill="#FFFFFF" fill-opacity="0.03"/>
+      <circle cx="5.1" cy="3" r="0.38" fill="#FFFFFF" fill-opacity="0.02"/>
+      <circle cx="2.7" cy="5.6" r="0.36" fill="#FFFFFF" fill-opacity="0.02"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="1200" fill="url(#bg)"/>
+  <rect width="1200" height="1200" fill="url(#bgBlue)"/>
+  <rect width="1200" height="1200" fill="url(#bgPurple)"/>
+
+  <g filter="url(#bgBlur)" opacity="0.42">
+    <ellipse cx="600" cy="980" rx="270" ry="44" fill="#07090F"/>
+  </g>
+
+  <g filter="url(#shirtShadow)">
+    <path d="M372 284L498 196H702L828 284L950 360L880 560L792 510V1022H408V510L320 560L250 360L372 284Z" fill="url(#shirtBase)"/>
+    <path d="M498 196H702L662 286H538L498 196Z" fill="#0A0F18"/>
+    <path d="M538 286H662" stroke="#3B4559" stroke-width="8" stroke-linecap="round"/>
+
+    <path d="M408 510V1022H792V510" stroke="#313B4E" stroke-width="4" opacity="0.72"/>
+    <path d="M600 304V1022" stroke="#2D374A" stroke-width="2.8" opacity="0.38"/>
+    <path d="M346 306L494 224" stroke="#303A4D" stroke-width="3" opacity="0.74"/>
+    <path d="M854 306L706 224" stroke="#303A4D" stroke-width="3" opacity="0.74"/>
+    <path d="M442 590C460 563 488 548 520 548" stroke="#3A4457" stroke-width="3" opacity="0.55"/>
+    <path d="M758 590C740 563 712 548 680 548" stroke="#3A4457" stroke-width="3" opacity="0.55"/>
+
+    <ellipse cx="600" cy="638" rx="290" ry="450" fill="url(#shirtSpec)"/>
+    <ellipse cx="600" cy="638" rx="300" ry="460" fill="url(#rimBlue)"/>
+    <ellipse cx="600" cy="638" rx="306" ry="468" fill="url(#rimPurple)"/>
+    <path d="M408 510V1022H792V510" fill="url(#fabricGrain)" opacity="0.55"/>
+
+    <!-- Premium front graphic area (approx 40% torso) -->
+    <g>
+      <ellipse cx="602" cy="620" rx="184" ry="240" fill="url(#nebulaCore)" opacity="0.56"/>
+      <ellipse cx="612" cy="742" rx="160" ry="174" fill="url(#nebulaOuter)" opacity="0.45"/>
+
+      <!-- Saturn and planets -->
+      <circle cx="688" cy="470" r="25" fill="none" stroke="url(#inkMain)" stroke-width="2.5"/>
+      <ellipse cx="688" cy="470" rx="44" ry="12" transform="rotate(-14 688 470)" stroke="url(#inkMain)" stroke-width="2.2"/>
+      <circle cx="525" cy="504" r="14" fill="none" stroke="url(#inkMain)" stroke-width="2.1" opacity="0.86"/>
+      <circle cx="722" cy="554" r="10" fill="#E2E8F0" fill-opacity="0.86"/>
+      <circle cx="722" cy="554" r="17" stroke="#C4B5FD" stroke-opacity="0.48" stroke-width="1.6"/>
+      <circle cx="484" cy="556" r="8" fill="#93C5FD" fill-opacity="0.66"/>
+
+      <!-- Astronaut reaching toward viewer -->
+      <ellipse cx="600" cy="572" rx="74" ry="84" fill="none" stroke="url(#inkMain)" stroke-width="2.8"/>
+      <path d="M552 566C558 532 576 512 600 512C624 512 642 532 648 566C644 594 625 612 600 612C575 612 556 594 552 566Z" fill="url(#inkShade)" stroke="url(#inkMain)" stroke-width="2.2"/>
+      <path d="M552 585C566 595 583 600 600 600C617 600 634 595 648 585" stroke="#FFFFFF" stroke-opacity="0.52" stroke-width="1.8"/>
+      <rect x="564" y="650" width="72" height="20" rx="10" fill="none" stroke="url(#inkMain)" stroke-width="2.3"/>
+
+      <path d="M545 676C555 656 575 644 600 644C625 644 645 656 655 676L670 770C646 787 624 796 600 796C576 796 554 787 530 770L545 676Z" fill="none" stroke="url(#inkMain)" stroke-width="2.6"/>
+      <path d="M561 690H639M568 712H632M574 734H626" stroke="#E2E8F0" stroke-opacity="0.6" stroke-width="1.8" stroke-linecap="round"/>
+      <circle cx="584" cy="720" r="5" fill="#C4B5FD" fill-opacity="0.8"/>
+      <circle cx="616" cy="720" r="5" fill="#93C5FD" fill-opacity="0.8"/>
+
+      <!-- Reaching arm and glove (foreshortened) -->
+      <path d="M654 690C692 696 724 722 742 758C732 780 711 792 688 790C660 764 640 730 632 700" fill="url(#inkShade)" stroke="url(#inkMain)" stroke-width="2.3"/>
+      <path d="M718 766C741 758 758 772 758 794C750 812 732 824 710 824C695 818 686 806 686 792C686 781 697 772 718 766Z" fill="none" stroke="url(#inkMain)" stroke-width="2.3"/>
+      <path d="M724 770C734 764 744 768 748 778" stroke="#FFFFFF" stroke-opacity="0.5" stroke-width="1.6" stroke-linecap="round"/>
+
+      <!-- Varsity typography stack -->
+      <text x="600" y="842" fill="#F8FAFC" font-size="78" font-weight="800" font-family="Arial Black, Arial, Helvetica, sans-serif" letter-spacing="6" text-anchor="middle">COSMIC</text>
+      <text x="600" y="900" fill="#DDD6FE" font-size="52" font-weight="800" font-family="Arial Black, Arial, Helvetica, sans-serif" letter-spacing="7" text-anchor="middle">TEES</text>
+      <text x="600" y="936" fill="#93C5FD" fill-opacity="0.82" font-size="16" font-family="Arial, Helvetica, sans-serif" letter-spacing="4" text-anchor="middle">WEAR YOUR UNIVERSE</text>
+
+      <!-- Geometric accents + cosmic particles -->
+      <path d="M466 660L506 638L546 660L506 682L466 660Z" fill="none" stroke="url(#inkMain)" stroke-width="1.9" opacity="0.8"/>
+      <path d="M654 660L694 638L734 660L694 682L654 660Z" fill="none" stroke="url(#inkMain)" stroke-width="1.9" opacity="0.8"/>
+      <path d="M492 770L600 820L708 770" stroke="url(#inkMain)" stroke-width="1.9" stroke-linecap="round" opacity="0.8"/>
+      <path d="M520 798L600 836L680 798" stroke="#60A5FA" stroke-opacity="0.55" stroke-width="1.7" stroke-linecap="round"/>
+
+      <circle cx="558" cy="444" r="1.8" fill="#FFFFFF" fill-opacity="0.9"/>
+      <circle cx="610" cy="432" r="1.4" fill="#FFFFFF" fill-opacity="0.78"/>
+      <circle cx="652" cy="444" r="1.6" fill="#FFFFFF" fill-opacity="0.84"/>
+      <circle cx="530" cy="592" r="1.3" fill="#FFFFFF" fill-opacity="0.74"/>
+      <circle cx="684" cy="624" r="1.4" fill="#FFFFFF" fill-opacity="0.74"/>
+      <circle cx="708" cy="600" r="1.1" fill="#93C5FD" fill-opacity="0.7"/>
+      <circle cx="486" cy="612" r="1.1" fill="#C4B5FD" fill-opacity="0.7"/>
+      <path d="M596 468L600 475L607 479L600 483L596 490L592 483L585 479L592 475L596 468Z" fill="#FFFFFF" fill-opacity="0.74"/>
+
+      <g filter="url(#printGlow)" opacity="0.86">
+        <path d="M600 446C651 446 695 468 721 506C742 538 750 576 750 624C750 687 738 734 710 772C682 810 644 832 600 832C556 832 518 810 490 772C462 734 450 687 450 624C450 576 458 538 479 506C505 468 549 446 600 446Z" stroke="#A78BFA" stroke-opacity="0.24" stroke-width="3.2"/>
+      </g>
+    </g>
+  </g>
++</svg>

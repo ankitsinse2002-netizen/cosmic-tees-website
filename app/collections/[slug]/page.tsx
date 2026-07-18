@@ -19,6 +19,15 @@ type PageProps = {
   }>;
 };
 
+export function generateStaticParams() {
+  return [
+    { slug: "cosmic" },
+    { slug: "anime" },
+    { slug: "quotes" },
+    { slug: "trending" },
+  ];
+}
+
 function CollectionErrorState({
   title,
   message,

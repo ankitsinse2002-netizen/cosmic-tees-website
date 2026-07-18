@@ -72,7 +72,7 @@ export function Hero() {
 
           <motion.div variants={item} className="flex flex-col gap-3 sm:flex-row">
             <a
-              href="#drops"
+              href="/collections/cosmic"
               className={cn(
                 buttonVariants({ size: "lg" }),
                 "group h-13 gap-2 px-7 text-sm uppercase tracking-widest transition-transform hover:-translate-y-0.5",
@@ -82,7 +82,7 @@ export function Hero() {
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </a>
             <a
-              href="#drops"
+              href="/shop"
               className={cn(
                 buttonVariants({ variant: "outline", size: "lg" }),
                 "h-13 gap-2 px-7 text-sm uppercase tracking-widest transition-transform hover:-translate-y-0.5",
@@ -112,27 +112,51 @@ export function Hero() {
         </motion.div>
 
         <motion.div
-          className="relative"
+          className="relative md:scale-[1.13] md:origin-center"
           initial={{ opacity: 0, scale: reduceMotion ? 1 : 0.96 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.7, ease: [0.21, 0.47, 0.32, 0.98], delay: 0.1 }}
         >
-          <div className="pointer-events-none absolute -inset-4 bg-primary/10 blur-3xl" />
-          <div className="group relative aspect-square overflow-hidden rounded-sm border border-border bg-card">
-            <img
-              src="/hero-tee.png"
-              alt="Cosmic Tees heavyweight streetwear t-shirt with crimson anime graphic"
-              width={720}
-              height={720}
-              fetchPriority="high"
-              className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-[1.03]"
+          <div className="pointer-events-none absolute -inset-2 bg-primary/10 blur-3xl" />
+          <div
+            aria-hidden
+            className="pointer-events-none absolute -inset-x-6 -top-6 h-24 rounded-full"
+            style={{
+              background:
+                "radial-gradient(circle at center, rgba(99, 102, 241, 0.24), rgba(15, 15, 15, 0) 72%)",
+            }}
+          />
+          <div className="group relative flex items-center justify-center overflow-hidden rounded-sm border border-border/70 bg-card p-6 shadow-[0_0_0_1px_rgba(167,139,250,0.12),0_0_28px_rgba(99,102,241,0.12)]">
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-0 z-10"
+              style={{
+                background:
+                  "radial-gradient(circle at 28% 18%, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0) 28%), radial-gradient(circle at 74% 62%, rgba(96,165,250,0.18) 0%, rgba(96,165,250,0) 34%), radial-gradient(circle at 22% 72%, rgba(167,139,250,0.2) 0%, rgba(167,139,250,0) 36%), linear-gradient(135deg, rgba(15,15,15,0.04), rgba(15,15,15,0.42))",
+              }}
             />
-            <div className="absolute bottom-4 left-4 flex items-center gap-2 rounded-full bg-background/80 px-3.5 py-2 backdrop-blur">
-              <span className="h-2 w-2 rounded-full bg-primary" />
-              <span className="text-[11px] font-semibold uppercase tracking-[0.2em]">
-                240 GSM // Heavyweight
-              </span>
-            </div>
+            <div
+              aria-hidden
+              className="pointer-events-none absolute inset-0 z-10 mix-blend-screen"
+              style={{
+                backgroundImage:
+                  "radial-gradient(circle at 12% 24%, rgba(255,255,255,0.32) 0 1px, transparent 2px), radial-gradient(circle at 82% 28%, rgba(255,255,255,0.24) 0 1px, transparent 2px), radial-gradient(circle at 64% 76%, rgba(255,255,255,0.22) 0 1px, transparent 2px)",
+              }}
+            />
+            <img
+              src="/hero-reference.png"
+              alt="Premium oversized black Cosmic Tees t-shirt with galaxy lighting"
+              width={1536}
+              height={1024}
+              fetchPriority="high"
+              className="m-0 block h-auto w-[92%] object-contain object-center p-0 transition-transform duration-700 ease-out group-hover:scale-[1.02] motion-safe:animate-[heroFloat_6.5s_ease-in-out_infinite]"
+            />
+          </div>
+          <div className="mt-3 inline-flex items-center gap-2 rounded-full bg-background/80 px-3.5 py-2 backdrop-blur">
+            <span className="h-2 w-2 rounded-full bg-primary" />
+            <span className="text-[11px] font-semibold uppercase tracking-[0.2em]">
+              240 GSM // Heavyweight
+            </span>
           </div>
         </motion.div>
       </div>

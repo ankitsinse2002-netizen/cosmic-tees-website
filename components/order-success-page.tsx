@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { CheckCircle2, CircleHelp, Download, Mail, PackageSearch, Sparkles } from "lucide-react";
+import { CheckCircle2, CircleHelp, Mail, PackageSearch, Sparkles } from "lucide-react";
 import { motion } from "motion/react";
 
 import { Reveal } from "@/components/reveal";
@@ -242,16 +242,6 @@ export function OrderSuccessPageContent() {
                     Back to Home
                   </Button>
                 </Link>
-                <Button
-                  variant="outline"
-                  size="lg"
-                  className="h-12 w-full"
-                  disabled
-                  title="Invoice download will be enabled after WooCommerce order API integration"
-                >
-                  <Download className="mr-2 h-4 w-4" />
-                  Download Invoice
-                </Button>
               </div>
 
               <p className="mt-4 inline-flex items-center gap-2 text-xs uppercase tracking-[0.25em] text-muted-foreground">

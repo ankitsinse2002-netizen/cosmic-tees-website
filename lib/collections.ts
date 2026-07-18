@@ -30,6 +30,13 @@ export type CollectionProductsResult = {
   perPage: number;
 };
 
+const curatedCollectionAliases: Record<string, string[]> = {
+  cosmic: ["cosmic"],
+  anime: ["anime"],
+  quotes: ["quotes", "quote"],
+  trending: ["trending", "trending-drops", "trending-dropss", "trending drops"],
+};
+
 export function parseCollectionSort(value?: string): CollectionSort {
   if (value === "price_asc" || value === "price_desc") {
     return value;
@@ -163,7 +170,49 @@ export async function getCategoryBySlug(
 ) {
   const resolvedCategories = categories ?? (await getCollectionCategories());
 
-  return resolvedCategories.find((category) => category.slug === slug) ?? null;
+  const exact = resolvedCategories.find((category) => category.slug === slug) ?? null;
+  if (exact) {
+    return exact;
+  }
+
+  const aliasKey = Object.keys(curatedCollectionAliases).find((key) =>
+    curatedCollectionAliases[key].includes(slug.toLowerCase()),
+  );
+
+  if (aliasKey) {
+    const matched = resolvedCategories.find((category) => {
+      const lowered = category.slug.toLowerCase();
+      const name = category.name.toLowerCase();
+      return (
+        curatedCollectionAliases[aliasKey].includes(lowered) ||
+        curatedCollectionAliases[aliasKey].some((token) => name.includes(token))
+      );
+    });
+
+    if (matched) {
+      return matched;
+    }
+  }
+
+  return null;
+}
+
+export async function getCuratedCollectionCategories() {
+  const categories = await getCollectionCategories();
+  const keys = ["cosmic", "anime", "quotes", "trending"] as const;
+
+  const resolved = keys
+    .map((key) => {
+      const aliases = curatedCollectionAliases[key];
+      return (
+        categories.find((category) => aliases.includes(category.slug.toLowerCase())) ||
+        categories.find((category) => aliases.some((token) => category.name.toLowerCase().includes(token))) ||
+        null
+      );
+    })
+    .filter((category): category is WooCollectionCategory => Boolean(category));
+
+  return resolved;
 }
 
 export async function getCollectionContext(slug: string) {

@@ -9,11 +9,19 @@ import type { WooCollectionCategory } from "@/lib/collections"
 const columns = [
   {
     title: "Support",
-    links: ["Sizing Guide", "Shipping", "Returns", "Track Order", "Contact"],
+    links: [
+      { label: "FAQ", href: "/faq" },
+      { label: "Track Order", href: "/my-account/orders" },
+      { label: "Contact Support", href: "/contact" },
+    ],
   },
   {
     title: "Company",
-    links: ["Our Story", "Sustainability", "Wholesale", "Careers"],
+    links: [
+      { label: "Our Story", href: "/" },
+      { label: "Privacy", href: "/" },
+      { label: "Terms", href: "/" },
+    ],
   },
 ]
 
@@ -71,14 +79,14 @@ export function SiteFooter() {
               </h3>
               <ul className="flex flex-col gap-2.5">
                 {col.links.map((link) => (
-                  <li key={link}>
-                    <a
-                      href="#"
+                  <li key={link.label}>
+                    <Link
+                      href={link.href}
                       className="group inline-flex items-center text-sm text-foreground/80 transition-colors hover:text-primary"
                     >
                       <span className="mr-0 h-px w-0 bg-primary transition-all duration-300 group-hover:mr-2 group-hover:w-3" />
-                      {link}
-                    </a>
+                      {link.label}
+                    </Link>
                   </li>
                 ))}
               </ul>

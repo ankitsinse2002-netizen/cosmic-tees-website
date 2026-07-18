@@ -1,0 +1,14 @@
+{
+  "users": [
+    {
+      "id": "27e54c03-566d-46e3-928c-77d7f0628dc9",
+      "email": "auth_test_577541350@example.com",
+      "passwordHash": "$2b$10$ERLm3DHk1vY7ueEu0wf1sOSnYCWOfWpYrswVgDSlbZwSerrAT/8ze",
+      "firstName": "Aarav",
+      "lastName": "Patel",
+      "phone": "9876543210",
+      "createdAt": "2026-07-18T05:18:27.413Z",
+      "updatedAt": "2026-07-18T05:18:27.413Z"
+    }
+  ]
+}

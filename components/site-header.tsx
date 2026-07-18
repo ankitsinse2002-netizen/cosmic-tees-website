@@ -4,18 +4,21 @@ import { useEffect, useState } from "react"
 import { ShoppingBag, Menu, X, Search, User } from "lucide-react"
 import { AnimatePresence, motion } from "motion/react"
 import { Button } from "@/components/ui/button"
+import { SearchOverlay } from "@/components/search-overlay"
 import { cn } from "@/lib/utils"
 import { useCart } from "@/lib/cart-context"
 
 const navLinks = [
   { label: "Home", href: "/" },
   { label: "Shop", href: "/shop" },
-  { label: "Collections", href: "/#categories" },
+  { label: "Collections", href: "/collections" },
 ]
 
 export function SiteHeader({ cartCount: cartCountProp }: { cartCount?: number }) {
   const { cartCount: cartCountFromContext } = useCart()
   const cartCount = cartCountFromContext ?? cartCountProp ?? 0
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [searchOpen, setSearchOpen] = useState(false)
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
 
@@ -24,6 +27,29 @@ export function SiteHeader({ cartCount: cartCountProp }: { cartCount?: number })
     onScroll()
     window.addEventListener("scroll", onScroll, { passive: true })
     return () => window.removeEventListener("scroll", onScroll)
+  }, [])
+
+  useEffect(() => {
+    let cancelled = false
+
+    const checkSession = async () => {
+      try {
+        const response = await fetch("/api/auth/me", { cache: "no-store" })
+        const data = (await response.json()) as { user?: { id?: string } | null }
+        if (!cancelled) {
+          setIsLoggedIn(Boolean(data.user?.id))
+        }
+      } catch {
+        if (!cancelled) {
+          setIsLoggedIn(false)
+        }
+      }
+    }
+
+    void checkSession()
+    return () => {
+      cancelled = true
+    }
   }, [])
 
   return (
@@ -79,17 +105,19 @@ export function SiteHeader({ cartCount: cartCountProp }: { cartCount?: number })
             size="icon"
             className="h-10 w-10 text-muted-foreground transition-colors hover:text-foreground"
             aria-label="Search"
+            onClick={() => setSearchOpen(true)}
           >
             <Search className="h-[18px] w-[18px]" />
           </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="hidden h-10 w-10 text-muted-foreground transition-colors hover:text-foreground sm:inline-flex"
-            aria-label="Account"
-          >
-            <User className="h-[18px] w-[18px]" />
-          </Button>
+          <a href={isLoggedIn ? "/my-account" : "/login"} aria-label="Account">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="hidden h-10 w-10 text-muted-foreground transition-colors hover:text-foreground sm:inline-flex"
+            >
+              <User className="h-[18px] w-[18px]" />
+            </Button>
+          </a>
           <a
             href="/cart"
             className="relative flex h-10 w-10 items-center justify-center rounded-lg text-muted-foreground transition-colors hover:text-foreground"
@@ -134,6 +162,15 @@ export function SiteHeader({ cartCount: cartCountProp }: { cartCount?: number })
             aria-label="Mobile"
           >
             <div className="flex flex-col gap-1 px-4 py-3">
+              <button
+                className="rounded-md py-2.5 text-left text-sm font-semibold uppercase tracking-[0.2em] text-muted-foreground transition-colors hover:bg-secondary/50 hover:text-foreground"
+                onClick={() => {
+                  setOpen(false)
+                  setSearchOpen(true)
+                }}
+              >
+                Search
+              </button>
               {navLinks.map((link) => (
                 <a
                   key={link.label}
@@ -148,6 +185,8 @@ export function SiteHeader({ cartCount: cartCountProp }: { cartCount?: number })
           </motion.nav>
         )}
       </AnimatePresence>
+
+      <SearchOverlay open={searchOpen} onClose={() => setSearchOpen(false)} />
     </header>
   )
 }
