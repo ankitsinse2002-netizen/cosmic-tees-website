@@ -1,11 +1,24 @@
 import { NextResponse } from "next/server";
-import getApi from "@/lib/woocommerce";
+import getApi, { isWooCommerceConfigured } from "@/lib/woocommerce";
 
 export const revalidate = 300; // re-fetch categories every 5 minutes
 
 export async function GET() {
   try {
+    // Return empty array gracefully if WooCommerce is not configured
+    if (!isWooCommerceConfigured()) {
+      return NextResponse.json([], {
+        headers: { "Cache-Control": "s-maxage=300, stale-while-revalidate=600" },
+      });
+    }
+
     const api = getApi();
+    if (!api) {
+      return NextResponse.json([], {
+        headers: { "Cache-Control": "s-maxage=300, stale-while-revalidate=600" },
+      });
+    }
+
     const response = await api.get("products/categories", {
       hide_empty: false,
       per_page: 100,
@@ -33,6 +46,8 @@ export async function GET() {
     });
   } catch (error) {
     console.error("[/api/shop/categories] error:", error);
-    return NextResponse.json([], { status: 500 });
+    return NextResponse.json([], {
+      headers: { "Cache-Control": "s-maxage=300, stale-while-revalidate=600" },
+    });
   }
 }

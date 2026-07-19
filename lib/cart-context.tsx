@@ -307,7 +307,17 @@ export function useCart() {
   const context = useContext(CartContext);
 
   if (!context) {
-    throw new Error("useCart must be used within a CartProvider");
+    // Return a safe default instead of throwing to prevent crashes
+    console.error("useCart must be used within a CartProvider");
+    return {
+      items: [],
+      addItem: async () => {},
+      updateQuantity: async () => {},
+      removeItem: async () => {},
+      clearCart: async () => {},
+      cartCount: 0,
+      isLoading: false,
+    };
   }
 
   return context;

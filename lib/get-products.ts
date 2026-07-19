@@ -1,9 +1,17 @@
-import getApi from "./woocommerce";
+import getApi, { isWooCommerceConfigured } from "./woocommerce";
 import { mapWooProduct } from "./mapper";
 
 export async function getProducts() {
   try {
+    if (!isWooCommerceConfigured()) {
+      return [];
+    }
+    
     const api = getApi();
+    if (!api) {
+      return [];
+    }
+    
     const response = await api.get("products", {
       per_page: 100,
       status: "publish",
@@ -18,7 +26,15 @@ export async function getProducts() {
 
 export async function getFeaturedProducts() {
   try {
+    if (!isWooCommerceConfigured()) {
+      return [];
+    }
+    
     const api = getApi();
+    if (!api) {
+      return [];
+    }
+    
     const response = await api.get("products", {
       featured: true,
       per_page: 8,
@@ -33,7 +49,15 @@ export async function getFeaturedProducts() {
 
 export async function getProductBySlug(slug: string) {
   try {
+    if (!isWooCommerceConfigured()) {
+      return null;
+    }
+    
     const api = getApi();
+    if (!api) {
+      return null;
+    }
+    
     const response = await api.get("products", {
       slug,
     });

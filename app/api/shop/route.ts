@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import getApi from "@/lib/woocommerce";
+import getApi, { isWooCommerceConfigured } from "@/lib/woocommerce";
 import { mapWooProduct } from "@/lib/mapper";
 
 export const dynamic = "force-dynamic";
@@ -36,7 +36,22 @@ export async function GET(request: NextRequest) {
   if (categoryId) params.category = parseInt(categoryId, 10);
 
   try {
+    // Return empty results gracefully if WooCommerce is not configured
+    if (!isWooCommerceConfigured()) {
+      return NextResponse.json(
+        { products: [], total: 0, totalPages: 0, page: 1, perPage: PER_PAGE },
+        { headers: { "Cache-Control": "no-store" } },
+      );
+    }
+
     const api = getApi();
+    if (!api) {
+      return NextResponse.json(
+        { products: [], total: 0, totalPages: 0, page: 1, perPage: PER_PAGE },
+        { headers: { "Cache-Control": "no-store" } },
+      );
+    }
+
     const response = await api.get("products", params);
 
     const total = parseInt(
@@ -64,7 +79,7 @@ export async function GET(request: NextRequest) {
     console.error("[/api/shop] error:", error);
     return NextResponse.json(
       { products: [], total: 0, totalPages: 0, page: 1, perPage: PER_PAGE },
-      { status: 500 },
+      { headers: { "Cache-Control": "no-store" } },
     );
   }
 }

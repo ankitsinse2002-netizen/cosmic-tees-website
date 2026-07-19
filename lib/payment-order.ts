@@ -1,6 +1,6 @@
 import { createHash } from "crypto";
 
-import getApi from "./woocommerce";
+import getApi, { isWooCommerceConfigured } from "./woocommerce";
 import type { CheckoutSnapshot } from "./payment";
 
 export type StoreCartItem = {
@@ -168,6 +168,17 @@ export async function createCodOrderFromCart({
   body: CodOrderRequest;
 }) {
   cleanupDuplicateGuard();
+
+  // Check if WooCommerce is properly configured
+  if (!isWooCommerceConfigured()) {
+    const details = {
+      requestUrl,
+      configured: false,
+    };
+
+    console.error("[payment-order] WooCommerce not configured", details);
+    throw new CodOrderCreationError("WooCommerce is not configured. Payment processing is unavailable.", 503, details);
+  }
 
   const wooBaseUrl = process.env.NEXT_PUBLIC_WC_URL || "";
   const consumerKey = process.env.WC_CONSUMER_KEY;
