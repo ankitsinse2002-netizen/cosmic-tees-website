@@ -4,6 +4,8 @@ import { SiteHeader } from "@/components/site-header";
 import type { WooCollectionCategory } from "@/lib/collections";
 import { getCuratedCollectionCategories } from "@/lib/collections";
 
+export const dynamic = 'force-dynamic';
+
 const curatedFallback: WooCollectionCategory[] = [
   {
     id: -1,

@@ -1,8 +1,9 @@
 import { NextResponse } from "next/server";
-import api from "@/lib/woocommerce";
+import getApi from "@/lib/woocommerce";
 
 export async function GET() {
   try {
+    const api = getApi();
     const response = await api.get("products");
 
     return NextResponse.json(response.data);

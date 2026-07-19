@@ -1,6 +1,6 @@
 import { unstable_cache } from "next/cache";
 
-import api from "./woocommerce";
+import getApi from "./woocommerce";
 import { mapWooProduct } from "./mapper";
 import type { Product } from "./products";
 
@@ -100,6 +100,7 @@ function mapCategory(category: any): WooCollectionCategory {
 
 const getWooCategoriesCached = unstable_cache(
   async (): Promise<WooCollectionCategory[]> => {
+    const api = getApi();
     const response = await withTimeout(
       api.get("products/categories", {
         hide_empty: false,
@@ -121,6 +122,7 @@ const getCollectionProductsCached = unstable_cache(
     page: number,
     sort: CollectionSort,
   ): Promise<CollectionProductsResult> => {
+    const api = getApi();
     let orderby = "date";
     let order: "asc" | "desc" = "desc";
 

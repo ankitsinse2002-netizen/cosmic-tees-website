@@ -19,6 +19,8 @@ type PageProps = {
   }>;
 };
 
+export const dynamic = 'force-dynamic';
+
 export function generateStaticParams() {
   return [
     { slug: "cosmic" },

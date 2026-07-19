@@ -1,6 +1,6 @@
 import { createHash } from "crypto";
 
-import api from "./woocommerce";
+import getApi from "./woocommerce";
 import type { CheckoutSnapshot } from "./payment";
 
 export type StoreCartItem = {
@@ -308,6 +308,7 @@ export async function createCodOrderFromCart({
     requestPayload: orderPayload,
   });
 
+  const api = getApi();
   let orderResponse: Awaited<ReturnType<typeof api.post>>;
   try {
     orderResponse = await withTimeout(api.post("orders", orderPayload));

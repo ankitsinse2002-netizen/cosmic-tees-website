@@ -1,8 +1,9 @@
-import api from "./woocommerce";
+import getApi from "./woocommerce";
 import { mapWooProduct } from "./mapper";
 
 export async function getProducts() {
   try {
+    const api = getApi();
     const response = await api.get("products", {
       per_page: 100,
       status: "publish",
@@ -17,6 +18,7 @@ export async function getProducts() {
 
 export async function getFeaturedProducts() {
   try {
+    const api = getApi();
     const response = await api.get("products", {
       featured: true,
       per_page: 8,
@@ -31,6 +33,7 @@ export async function getFeaturedProducts() {
 
 export async function getProductBySlug(slug: string) {
   try {
+    const api = getApi();
     const response = await api.get("products", {
       slug,
     });

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import api from "@/lib/woocommerce";
+import getApi from "@/lib/woocommerce";
 import { mapWooProduct } from "@/lib/mapper";
 
 export const dynamic = "force-dynamic";
@@ -36,6 +36,7 @@ export async function GET(request: NextRequest) {
   if (categoryId) params.category = parseInt(categoryId, 10);
 
   try {
+    const api = getApi();
     const response = await api.get("products", params);
 
     const total = parseInt(

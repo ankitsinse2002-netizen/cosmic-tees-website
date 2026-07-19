@@ -1,4 +1,4 @@
-import api from "@/lib/woocommerce";
+import getApi from "@/lib/woocommerce";
 
 export type AccountOrder = {
   id: number;
@@ -11,6 +11,7 @@ export type AccountOrder = {
 
 export async function getOrdersByEmail(email: string): Promise<AccountOrder[]> {
   try {
+    const api = getApi();
     const response = await api.get("orders", {
       email,
       per_page: 20,

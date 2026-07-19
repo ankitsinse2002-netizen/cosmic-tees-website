@@ -1,10 +1,11 @@
 import { NextResponse } from "next/server";
-import api from "@/lib/woocommerce";
+import getApi from "@/lib/woocommerce";
 
 export const revalidate = 300; // re-fetch categories every 5 minutes
 
 export async function GET() {
   try {
+    const api = getApi();
     const response = await api.get("products/categories", {
       hide_empty: false,
       per_page: 100,
