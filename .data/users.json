@@ -1,0 +1,24 @@
+{
+  "users": [
+    {
+      "id": "27e54c03-566d-46e3-928c-77d7f0628dc9",
+      "email": "auth_test_577541350@example.com",
+      "passwordHash": "$2b$10$ERLm3DHk1vY7ueEu0wf1sOSnYCWOfWpYrswVgDSlbZwSerrAT/8ze",
+      "firstName": "Aarav",
+      "lastName": "Patel",
+      "phone": "9876543210",
+      "createdAt": "2026-07-18T05:18:27.413Z",
+      "updatedAt": "2026-07-18T05:18:27.413Z"
+    },
+    {
+      "id": "5ee24d6d-ef0a-49c7-ae41-d01cf1e4d5b2",
+      "email": "ankitsinse2002@gmail.com",
+      "passwordHash": "$2b$10$bb9SznvOxmxy9Zi9SuU/ruffZ7c98jWygMf7TsKTS.nrgqSSXR6K2",
+      "firstName": "Ankit",
+      "lastName": "Kumar",
+      "phone": "+918420219819",
+      "createdAt": "2026-07-23T05:15:22.203Z",
+      "updatedAt": "2026-07-23T05:15:38.466Z"
+    }
+  ]
+}
