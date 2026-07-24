@@ -10,7 +10,6 @@ import {
   parseCollectionPage,
   parseCollectionSort,
 } from "@/lib/collections";
-import { getMockCollectionProducts } from "@/lib/mock-products";
 
 type PageProps = {
   params: Promise<{ slug: string; collection: string }>;
@@ -37,21 +36,16 @@ export default async function CollectionChildPage({ params, searchParams }: Page
   const page = parseCollectionPage(query.page);
   const sort = parseCollectionSort(query.sort);
 
-  const { categories, rootCategory, childCategory, childCards, useMockProducts } =
-    await getCollectionBranchContext(slug, collection);
+  const { rootCategory, childCategory, childCards } = await getCollectionBranchContext(
+    slug,
+    collection,
+  );
 
   if (!rootCategory || !childCategory) {
     notFound();
   }
 
-  const collectionProducts = useMockProducts
-    ? getMockCollectionProducts({
-        categoryId: childCategory.id,
-        page,
-        perPage: 12,
-        sort,
-      })
-    : await getCollectionProducts([childCategory.id], page, sort);
+  const collectionProducts = await getCollectionProducts([childCategory.id], page, sort);
   const siblingCollectionOptions: WooCollectionCategory[] = childCards.map((card, index) => ({
     id: index + 1,
     slug: card.slug,

@@ -293,7 +293,7 @@ const getCollectionProductsCached = unstable_cache(
     };
   },
   ["woo-collection-products"],
-  { revalidate: 0 },
+  { revalidate: false },
 );
 
 export async function getCollectionCategories() {
@@ -376,7 +376,6 @@ export async function getCollectionBranchContext(
       rootCategory: null,
       childCategory: null,
       childCards: [],
-      useMockProducts: false,
     };
   }
 
@@ -389,7 +388,6 @@ export async function getCollectionBranchContext(
       rootCategory: null,
       childCategory: null,
       childCards,
-      useMockProducts: false,
     };
   }
 
@@ -399,7 +397,6 @@ export async function getCollectionBranchContext(
       rootCategory,
       childCategory: null,
       childCards,
-      useMockProducts: false,
     };
   }
 
@@ -410,7 +407,6 @@ export async function getCollectionBranchContext(
       rootCategory,
       childCategory: null,
       childCards,
-      useMockProducts: false,
     };
   }
 
@@ -435,7 +431,6 @@ export async function getCollectionBranchContext(
       rootCategory,
       childCategory,
       childCards,
-      useMockProducts: false,
     };
   }
 
@@ -444,7 +439,6 @@ export async function getCollectionBranchContext(
     rootCategory,
     childCategory: null,
     childCards,
-    useMockProducts: false,
   };
 }
 
