@@ -2,10 +2,6 @@ import { unstable_cache } from "next/cache";
 
 import getApi from "./woocommerce";
 import { mapWooProduct } from "./mapper";
-import {
-  getMockCollectionCategories,
-  getMockCollectionProducts,
-} from "./mock-products";
 import type { Product } from "./products";
 
 export const COLLECTION_PER_PAGE = 12;
@@ -71,6 +67,8 @@ const collectionChildAliases: Record<MainCollectionChildKey, string[]> = {
   "premium-drop": ["premium-drop", "premium", "premium drop"],
   "essential-series": ["essential-series", "essential", "essential series"],
 };
+
+const menWomenSubcategoryAliases = ["premium-drop", "essential-series", "premium", "essential"];
 
 const collectionChildDisplay: Record<
   MainCollectionChildKey,
@@ -230,7 +228,7 @@ const getWooCategoriesCached = unstable_cache(
   async (): Promise<WooCollectionCategory[]> => {
     const api = getApi();
     if (!api) {
-      return getMockCollectionCategories();
+      throw new Error("WooCommerce API is not configured.");
     }
 
     const response = await withTimeout(
@@ -256,12 +254,7 @@ const getCollectionProductsCached = unstable_cache(
   ): Promise<CollectionProductsResult> => {
     const api = getApi();
     if (!api) {
-      return getMockCollectionProducts({
-        categoryIds,
-        page,
-        perPage: COLLECTION_PER_PAGE,
-        sort,
-      });
+      throw new Error("WooCommerce API is not configured.");
     }
 
     let orderby = "date";
@@ -300,15 +293,15 @@ const getCollectionProductsCached = unstable_cache(
     };
   },
   ["woo-collection-products"],
-  { revalidate: 60 },
+  { revalidate: 0 },
 );
 
 export async function getCollectionCategories() {
   try {
     return await getWooCategoriesCached();
   } catch (error) {
-    console.error("[collections] categories fallback:", error);
-    return getMockCollectionCategories();
+    console.error("[collections] categories request failed:", error);
+    throw error;
   }
 }
 
@@ -370,21 +363,6 @@ export function getCollectionRootChildren(rootSlug: string) {
   }));
 }
 
-function getFallbackChildCategoryId(
-  rootKey: MainCollectionKey,
-  childKey: MainCollectionChildKey,
-) {
-  if (rootKey === "men") {
-    return childKey === "premium-drop" ? 111 : 112;
-  }
-
-  if (rootKey === "women") {
-    return childKey === "premium-drop" ? 121 : 122;
-  }
-
-  return 0;
-}
-
 export async function getCollectionBranchContext(
   rootSlug: string,
   childSlug?: string,
@@ -432,6 +410,7 @@ export async function getCollectionBranchContext(
       rootCategory,
       childCategory: null,
       childCards,
+      useMockProducts: false,
     };
   }
 
@@ -460,22 +439,12 @@ export async function getCollectionBranchContext(
     };
   }
 
-  const mockCategories = getMockCollectionCategories();
-  const childCategory = {
-    id: getFallbackChildCategoryId(rootKey, childKey),
-    name: collectionChildDisplay[childKey].name,
-    slug: childKey,
-    parent: rootCategory.id,
-    description: collectionChildDisplay[childKey].description,
-    count: 0,
-  } satisfies WooCollectionCategory;
-
   return {
     categories,
     rootCategory,
-    childCategory,
+    childCategory: null,
     childCards,
-    useMockProducts: Boolean(childCategory),
+    useMockProducts: false,
   };
 }
 
@@ -568,12 +537,7 @@ export async function getCollectionProducts(
   try {
     return await getCollectionProductsCached(normalizedCategoryIds, page, sort);
   } catch (error) {
-    console.error("[collections] products fallback:", error);
-    return getMockCollectionProducts({
-      categoryIds: normalizedCategoryIds,
-      page,
-      perPage: COLLECTION_PER_PAGE,
-      sort,
-    });
+    console.error("[collections] products request failed:", error);
+    throw error;
   }
 }

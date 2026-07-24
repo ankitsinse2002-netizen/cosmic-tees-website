@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import getApi from "@/lib/woocommerce";
 import { mapWooProduct } from "@/lib/mapper";
-import { getMockCollectionProducts } from "@/lib/mock-products";
 
 export const dynamic = "force-dynamic";
 
@@ -42,17 +41,10 @@ export async function GET(request: NextRequest) {
   try {
     const api = getApi();
     if (!api) {
-      const mock = getMockCollectionProducts({
-        page,
-        perPage: PER_PAGE,
-        sort: sort === "price_asc" || sort === "price_desc" ? sort : "latest",
-        search,
-        categoryId: Number.isFinite(parsedCategoryId) ? parsedCategoryId : undefined,
-      });
-
-      return NextResponse.json(mock, {
-        headers: { "Cache-Control": "no-store" },
-      });
+      return NextResponse.json(
+        { message: "WooCommerce API is not configured." },
+        { status: 500, headers: { "Cache-Control": "no-store" } },
+      );
     }
 
     const response = await api.get("products", params);
@@ -80,16 +72,9 @@ export async function GET(request: NextRequest) {
     );
   } catch (error) {
     console.error("[/api/shop] error:", error);
-    const mock = getMockCollectionProducts({
-      page,
-      perPage: PER_PAGE,
-      sort: sort === "price_asc" || sort === "price_desc" ? sort : "latest",
-      search,
-      categoryId: Number.isFinite(parsedCategoryId) ? parsedCategoryId : undefined,
-    });
-
-    return NextResponse.json(mock, {
-      headers: { "Cache-Control": "no-store" },
-    });
+    return NextResponse.json(
+      { message: "Failed to fetch products from WooCommerce." },
+      { status: 502, headers: { "Cache-Control": "no-store" } },
+    );
   }
 }

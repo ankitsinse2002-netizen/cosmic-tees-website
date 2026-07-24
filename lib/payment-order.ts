@@ -1,6 +1,6 @@
 import { createHash } from "crypto";
 
-import getApi from "./woocommerce";
+import getApi, { getWooBaseUrl } from "./woocommerce";
 import type { CheckoutSnapshot } from "./payment";
 
 export type StoreCartItem = {
@@ -183,9 +183,9 @@ export async function createCodOrderFromCart({
 }) {
   cleanupDuplicateGuard();
 
-  const wooBaseUrl = process.env.NEXT_PUBLIC_WC_URL || "";
-  const consumerKey = process.env.WC_CONSUMER_KEY;
-  const consumerSecret = process.env.WC_CONSUMER_SECRET;
+  const wooBaseUrl = getWooBaseUrl() || "";
+  const consumerKey = process.env.WC_CONSUMER_KEY?.trim();
+  const consumerSecret = process.env.WC_CONSUMER_SECRET?.trim();
   const isWooConfigured = Boolean(wooBaseUrl && consumerKey && consumerSecret);
   const isRazorpay = body.paymentMethod === "razorpay";
 
@@ -288,27 +288,18 @@ export async function createCodOrderFromCart({
   };
 
   if (!isWooConfigured) {
-    const mockOrderId = Date.now();
-    const mockResponse: CodOrderResponse = {
-      orderId: mockOrderId,
-      orderNumber: String(mockOrderId),
-      orderKey: `mock_${mockOrderId}`,
-      status: isRazorpay ? "processing" : "on-hold",
-      total: Number((subtotal + shippingTotal).toFixed(2)),
-      duplicate: false,
-    };
-
-    duplicateGuard.set(fingerprint, {
-      response: mockResponse,
-      createdAt: Date.now(),
-    });
-
-    await clearCartBestEffort(requestUrl, headers);
-
-    return {
-      status: 200,
-      body: mockResponse,
-    } as const;
+    throw new CodOrderCreationError(
+      "WooCommerce is not configured. Set WC_API_URL (or NEXT_PUBLIC_WC_URL), WC_CONSUMER_KEY, and WC_CONSUMER_SECRET.",
+      500,
+      {
+        requestUrl,
+        missing: {
+          wooBaseUrl: !wooBaseUrl,
+          consumerKey: !consumerKey,
+          consumerSecret: !consumerSecret,
+        },
+      },
+    );
   }
 
   const endpointUrl = `${wooBaseUrl.replace(/\/$/, "")}/wp-json/wc/v3/orders`;
@@ -327,27 +318,11 @@ export async function createCodOrderFromCart({
 
   const api = getApi();
   if (!api) {
-    const mockOrderId = Date.now();
-    const mockResponse: CodOrderResponse = {
-      orderId: mockOrderId,
-      orderNumber: String(mockOrderId),
-      orderKey: `mock_${mockOrderId}`,
-      status: isRazorpay ? "processing" : "on-hold",
-      total: Number((subtotal + shippingTotal).toFixed(2)),
-      duplicate: false,
-    };
-
-    duplicateGuard.set(fingerprint, {
-      response: mockResponse,
-      createdAt: Date.now(),
-    });
-
-    await clearCartBestEffort(requestUrl, headers);
-
-    return {
-      status: 200,
-      body: mockResponse,
-    } as const;
+    throw new CodOrderCreationError(
+      "WooCommerce API client is unavailable.",
+      500,
+      { requestUrl, endpointUrl },
+    );
   }
 
   let orderResponse: Awaited<ReturnType<typeof api.post>>;
